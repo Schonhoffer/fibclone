@@ -4,7 +4,7 @@
  - id
  - timeCreated
  - state
- - step
+ - round
  - timeStepAdvanced
  - Players
  - Score
