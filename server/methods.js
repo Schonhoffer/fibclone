@@ -21,6 +21,7 @@ Meteor.methods({
     console.log('created new room: ' + roomId);
     return roomId;
   },
+  
   joinRoom: function (params) {
     check(params.roomCode, String);
     check(params.playerId, String);
@@ -35,6 +36,11 @@ Meteor.methods({
     }
     console.log('Found game with room code: ' + params.roomCode, ', gameId: '+ game._id);
     
+    if(game.round != 0){
+      console.log('Could not join game that has already started' + game._id);
+      throw new Meteor.Error("game-already-started", "Can not join game that has already started.");
+    }
+    
     console.log('Adding player to game: ' + params.playerId, ', nickname: '+ params.nickname);
     var setNewPlayer = {};
     setNewPlayer["players." + params.playerId] =  {
@@ -44,6 +50,24 @@ Meteor.methods({
     Games.update({_id: game._id}, { $set: setNewPlayer });
     
     return game._id;
+  },
+  setRound: function(params){
+    check(params.round, Number);
+    check(params.roomId, String);
+    params.round = ~~params.round;
+    
+    console.log('Looking for room id: ' + params.roomId);
+    var game = Games.findOne({_id:params.roomId});
+    
+    if(game == null){
+      console.log('Could not find game with game id: ' + params.roomId);
+      throw new Meteor.Error("game-not-found", "Could not find a game for that game id.");
+    }
+    
+    if(params.round -1 == game.round){
+      Games.update({_id: game._id}, { $set: {round: params.round, roomCode: null}});
+      GameRounds.update({gameId: game._id, round: params.round}, { $set: {roundStarted: new Date()}});
+    }
   }
 });
 

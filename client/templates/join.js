@@ -18,7 +18,7 @@ Template.join.events({
         }
         
       } else {
-        Router.go('lobby', {_id: roomId});
+        Router.go('game', {_id: roomId});
       }
     });
   }

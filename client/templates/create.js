@@ -12,7 +12,7 @@ Template.create.events({
       if (error) {
         alert('couldn\'t create game');
       } else {
-        Router.go('lobby', {_id: gameId});
+        Router.go('game', {_id: gameId});
       }
     });
   }
