@@ -6,3 +6,8 @@
 meteor-platform
 autopublish
 insecure
+html5cat:bootstrap-material-design
+less
+iron:router
+u2622:persistent-session
+

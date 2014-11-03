@@ -1,0 +1,20 @@
+<template name="lobby">
+
+<div class="container">
+  <div class="well">
+  <h1>{{ roomCode }}</h1>
+  
+  <ul>
+  {{#each playersArray}} 
+    <li>{{nickname}}</li>
+  {{/each}} 
+  </ul>
+  
+  {{#if canStartGame}}
+    <button class="btn btn-primary" id="startGameButton">Start Game</button>
+  {{/if}}
+  
+  </div>
+</div>
+
+</template>
