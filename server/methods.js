@@ -76,9 +76,33 @@ Meteor.methods({
     
     if(params.round -1 == game.round){
       Games.update({_id: game._id}, { $set: {round: params.round, roomCode: null}});
-      //should be using $min
-      GameRounds.update({gameId: game._id, round: params.round}, { $set: {roundStarted: new Date()}}); 
+      //todo: should be using $min
+      GameRounds.update({gameId: game._id, round: params.round}, { $set: {whenRoundStarted: new Date()}}); 
     }
+    
+  },
+  addLie: function(params){
+    check(params.gameId, String);
+    check(params.playerId, String);
+    check(params.lie, String);
+    
+    //todo add lie
+  },
+  startGuessing: function(params){
+    check(params.gameId, String);
+    
+    var game = Games.findOne({_id:params.gameId});
+    var round = GameRounes.findOne({gameId:game._id,round: game.round});
+    
+    var whenTimeIsRunOut = new Date(game.whenRoundStarted.getTime() + 30*1000);
+    var numberOfPlayers = _.size(game.players);
+    var numberOfLies = _.size(round.answers) - 1;
+    if(new Date() < whenTimeIsRunOut && numberOfGuesses < numberOfPlayers ){
+      throw new Meteor.Error("game-already-started", "Can not join game that has already started.");
+    }
+    
+    //todo: should be using $min
+    GameRounds.update({gameId: round.gameId, round: round.round}, { $set: {whenGuessingStarted: new Date()}}); 
   }
 });
 
