@@ -1,5 +1,5 @@
 Template.game.helpers({
   notStarted: function() {
-    return this.round == 0;
+    return this.game.round == 0;
   }
 });

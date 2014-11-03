@@ -10,7 +10,7 @@ Meteor.methods({
       nickname: params.nickname
     };
       
-    var roomId = Games.insert({
+    var gameId = Games.insert({
       createdAt: new Date(),
       allowGeo: params.allowGeo,
       hostId: params.hostId,
@@ -18,8 +18,18 @@ Meteor.methods({
       round: 0,
       players: players
     });
-    console.log('created new room: ' + roomId);
-    return roomId;
+    console.log('created new room: ' + gameId);
+    
+    GameRounds.insert({
+      round: 1,
+      gameId: gameId,
+      question: "What is the answer?",
+      truthValue: 1000,
+      lieValue: 500
+      
+    })
+    
+    return gameId;
   },
   
   joinRoom: function (params) {
@@ -53,20 +63,21 @@ Meteor.methods({
   },
   setRound: function(params){
     check(params.round, Number);
-    check(params.roomId, String);
+    check(params.gameId, String);
     params.round = ~~params.round;
     
-    console.log('Looking for room id: ' + params.roomId);
-    var game = Games.findOne({_id:params.roomId});
+    console.log('Looking for room id: ' + params.gameId);
+    var game = Games.findOne({_id:params.gameId});
     
     if(game == null){
-      console.log('Could not find game with game id: ' + params.roomId);
+      console.log('Could not find game with game id: ' + params.gameId);
       throw new Meteor.Error("game-not-found", "Could not find a game for that game id.");
     }
     
     if(params.round -1 == game.round){
       Games.update({_id: game._id}, { $set: {round: params.round, roomCode: null}});
-      GameRounds.update({gameId: game._id, round: params.round}, { $set: {roundStarted: new Date()}});
+      //should be using $min
+      GameRounds.update({gameId: game._id, round: params.round}, { $set: {roundStarted: new Date()}}); 
     }
   }
 });

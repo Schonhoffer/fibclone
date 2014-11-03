@@ -13,5 +13,6 @@ if (Meteor.isClient) {
     }
     
     console.log('playerId is '+uuid);
+    Meteor.subscribe('games', uuid)
   });
 }

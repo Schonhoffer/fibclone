@@ -1,0 +1,13 @@
+<template name="round">
+
+<div class="container">
+{{round.question}}
+{{#if isGuessingStarted}}
+<!-- render guessing template -->
+{{else}}
+  {{>lie}}
+{{/if}}
+
+</div>
+
+</template>

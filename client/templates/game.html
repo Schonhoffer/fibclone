@@ -1,6 +1,10 @@
 <template name="game">
 {{#if notStarted}}
-  {{>lobby}}
+  {{#with game}}
+   {{>lobby}}
+  {{/with}}
+{{else}}
+  {{>round}}
 {{/if}}
 
 </template>

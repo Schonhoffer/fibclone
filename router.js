@@ -4,6 +4,16 @@ Router.route('/join', {name: 'join', template: 'join'});
 Router.route('/game/:_id', { 
   name: 'game', 
   template: 'game',
+  waitOn: function() {
+    return [Meteor.subscribe('games', Session.get('playerId')),
+            Meteor.subscribe('gameRounds', this.params._id)]
+  },
   data: function () { 
-    return Games.findOne({_id: this.params._id}) }
-  });
+    var game = Games.findOne({_id: this.params._id});
+    var round = GameRounds.findOne({gameId: this.params._id, round: game.round})
+    return {
+      game: game,
+      round: round
+    }
+  }
+});

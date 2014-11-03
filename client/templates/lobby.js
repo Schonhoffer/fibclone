@@ -4,7 +4,7 @@ Template.lobby.helpers({
   },
   canStartGame: function() {
     return Session.get('playerId') == this.hostId
-      && _.size(_.values(this.players)) > 1;
+      && _.size(_.values(this.players)) > 0;
   }
 });
   
@@ -13,7 +13,7 @@ Template.lobby.events({
       
       var params = {
         round: 1,
-        roomId: this._id
+        gameId: this._id
       };
       
       Meteor.call('setRound', params, function (error, roomId) {
