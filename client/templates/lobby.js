@@ -23,6 +23,5 @@ Template.lobby.events({
         }
       });
     }
-  
 });
   

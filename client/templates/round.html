@@ -3,7 +3,7 @@
 <div class="container">
 {{round.question}}
 {{#if isGuessingStarted}}
-<!-- render guessing template -->
+  {{>guess}}
 {{else}}
   {{>lie}}
 {{/if}}

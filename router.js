@@ -14,7 +14,12 @@ Router.route('/game/:_id', {
   },
   data: function () { 
     var game = Games.findOne({_id: this.params._id});
-    var round = GameRounds.findOne({gameId: this.params._id, round: game.round})
+    
+    var round = null;
+    if(game){
+      round = GameRounds.findOne({gameId: this.params._id, round: game.round})
+    }
+    
     return {
       game: game,
       round: round

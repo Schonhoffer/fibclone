@@ -21,5 +21,18 @@ Template.lie.events({
         //tell them it's been submitted, show waht the put, show a timer?
       }
     });
+  },
+  'click .btn-warning': function(event, template) {
+    event.preventDefault();
+    
+    var params = {
+     gameId: this.game._id
+    }
+    
+    Meteor.call('startGuessing', params, function (error, result) {
+      if (error) {
+          alert('couldn\'t start guessing');
+      }
+    });
   }
 });

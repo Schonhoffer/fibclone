@@ -1,5 +1,5 @@
 Template.round.helpers({
   isGuessingStarted: function() {
-    return !!round.whenGuessingStarted;
+    return !!this.round.whenGuessingStarted;
   }
 });

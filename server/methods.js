@@ -24,6 +24,7 @@ Meteor.methods({
       round: 1,
       gameId: gameId,
       question: "What is the answer?",
+      answers: {"truth": "42"},
       truthValue: 1000,
       lieValue: 500
       
@@ -86,24 +87,44 @@ Meteor.methods({
     check(params.playerId, String);
     check(params.lie, String);
     
+    var game = Games.findOne({_id:params.gameId});
+    var round = GameRounds.findOne({gameId:game._id,round: game.round});
+    
+    var setNewAnswer = {};
+    setNewAnswer["answers." + params.playerId] =  params.lie;
+    GameRounds.update({gameId: round.gameId, round: round.round}, { $set: setNewAnswer });
     //todo add lie
   },
   startGuessing: function(params){
     check(params.gameId, String);
     
     var game = Games.findOne({_id:params.gameId});
-    var round = GameRounes.findOne({gameId:game._id,round: game.round});
+    var round = GameRounds.findOne({gameId:game._id,round: game.round});
     
-    var whenTimeIsRunOut = new Date(game.whenRoundStarted.getTime() + 30*1000);
+    if(round.whenGuessingStarted){
+      throw new Meteor.Error("already-started", "Guessing has already started.");
+    }
+    
+    var whenTimeIsRunOut = new Date(round.whenRoundStarted.getTime() + Meteor.constants.GUESS_TIME_SECONDS *1000);
     var numberOfPlayers = _.size(game.players);
     var numberOfLies = _.size(round.answers) - 1;
-    if(new Date() < whenTimeIsRunOut && numberOfGuesses < numberOfPlayers ){
-      throw new Meteor.Error("game-already-started", "Can not join game that has already started.");
+    if(new Date() < whenTimeIsRunOut && numberOfLies < numberOfPlayers ){
+      throw new Meteor.Error("not-ready", "Can not start game until all players have lied or time has elapsed.");
     }
     
     //todo: should be using $min
     GameRounds.update({gameId: round.gameId, round: round.round}, { $set: {whenGuessingStarted: new Date()}}); 
-  }
+  },
+  addGuess: function(params){
+    check(params.gameId, String);
+    check(params.playerId, String);
+    check(params.answerId, String);
+    
+    var game = Games.findOne({_id:params.gameId});
+    var round = GameRounds.findOne({gameId:game._id,round: game.round});
+    
+    //todo add a guess
+  },
 });
 
 function getUnusedRoomCode(){
