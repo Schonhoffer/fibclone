@@ -1,11 +1,17 @@
 <template name="lie">
-  <h1>enter a lie</h1>
-    <form class="form-horizontal">
-      <div class="form-group">
-        <label for="lie">Lie</label>
-        <input class="form-control input-lg" type="text" placeholder="" name="lie">
-      </div>
-    <button type="submit">Submit</button>
-  </form>
-  <button class="btn btn-warning">start guessing</button>
+  {{#if hasSubmittedLie }}
+    Waiting for other players
+    <button class="btn btn-warning">start guessing</button>
+  {{else}}
+    <h1>enter a lie</h1>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="lie">Lie</label>
+          <input class="form-control input-lg" type="text" placeholder="" name="lie">
+        </div>
+      <button type="submit">Submit</button>
+    </form>
+  {{/if}}
+  
+  
 </template>

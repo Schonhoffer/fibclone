@@ -1,3 +1,11 @@
+Template.lie.helpers({
+  'hasSubmittedLie': function(){
+    var query = {gameId: this.round.gameId, round: this.round.round};
+    query['options.'+Session.get('playerId')] = {$exists: true};
+    return !!GameRounds.findOne(query);
+  }
+});
+
 Template.lie.events({
   'submit': function(event, template) {
     event.preventDefault();
@@ -33,6 +41,7 @@ Template.lie.events({
       if (error) {
           alert(error.message);
       }
+      else{console.log('started guessing');}
     });
   }
 });
