@@ -2,7 +2,7 @@ Router.configure({
   layoutTemplate: 'layout'
 });
 
-Router.route('/', {name: 'launchpad', template: 'launchpad', layoutTemplate: null});
+Router.route('/', {name: 'launchpad', template: 'launchpad'});
 Router.route('/create', {name: 'create', template: 'create'});
 Router.route('/join', {name: 'join', template: 'join'});
 Router.route('/game/:_id', { 

@@ -63,9 +63,8 @@ Meteor.methods({
     return game._id;
   },
   setRound: function(params){
-    check(params.round, Number);
+    check(params.round, Match.Integer);
     check(params.gameId, String);
-    params.round = ~~params.round;
     
     console.log('Looking for room id: ' + params.gameId);
     var game = Games.findOne({_id:params.gameId});
@@ -93,6 +92,7 @@ Meteor.methods({
     var setnewOption = {};
     setnewOption["options." + params.playerId] =  params.lie;
     GameRounds.update({gameId: round.gameId, round: round.round}, { $set: setnewOption });
+    console.log('added lie');
   },
   startGuessing: function(params){
     check(params.gameId, String);

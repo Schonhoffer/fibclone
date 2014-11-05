@@ -1,6 +1,7 @@
 Template.lie.helpers({
   'hasSubmittedLie': function(){
-    var query = {gameId: this.round.gameId, round: this.round.round};
+    var round = this.round || {gameId: '', round: 0};
+    var query = {gameId: round.gameId, round: round.round};
     query['options.'+Session.get('playerId')] = {$exists: true};
     return !!GameRounds.findOne(query);
   }

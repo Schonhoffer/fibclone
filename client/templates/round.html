@@ -1,13 +1,11 @@
 <template name="round">
 
-<div class="container">
-{{round.question}}
+<h5>{{round.question}}</h5>
+
 {{#if isGuessingStarted}}
   {{>guess}}
 {{else}}
   {{>lie}}
 {{/if}}
-
-</div>
 
 </template>

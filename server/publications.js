@@ -14,5 +14,5 @@ Meteor.publish('gameRounds', function(gameId) {
     round = game.round;
   }
   
-  return GameRounds.find({gameId: gameId, round: {$lte: round}});
+  return GameRounds.find({gameId: gameId, round: round});
 });

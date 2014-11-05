@@ -1,8 +1,12 @@
 <template name="lie">
+
   {{#if hasSubmittedLie }}
+  
     Waiting for other players
     <button class="btn btn-warning">start guessing</button>
+    
   {{else}}
+  
     <h1>enter a lie</h1>
       <form class="form-horizontal">
         <div class="form-group">
@@ -11,7 +15,7 @@
         </div>
       <button type="submit">Submit</button>
     </form>
+    
   {{/if}}
-  
   
 </template>

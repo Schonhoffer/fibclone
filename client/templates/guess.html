@@ -1,7 +1,16 @@
 <template name="guess">
 
-{{#each answers}}
-  <button class="btn btn-info">{{text}}</button>
-{{/each}}
+  {{#if hasSubmittedGuess }}
+  
+    Waiting for other players
+    <button class="btn btn-warning">show scores</button>
+    
+  {{else}}
+  
+    {{#each answers}}
+      <button class="btn btn-info">{{text}}</button>
+    {{/each}}
+    
+  {{/if}}
 
 </template>
