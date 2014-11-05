@@ -24,10 +24,10 @@ Meteor.methods({
       round: 1,
       gameId: gameId,
       question: "What is the answer?",
-      answers: {"truth": "42"},
+      options: {"truth": "42"},
+      answers: {},
       truthValue: 1000,
       lieValue: 500
-      
     })
     
     return gameId;
@@ -90,10 +90,9 @@ Meteor.methods({
     var game = Games.findOne({_id:params.gameId});
     var round = GameRounds.findOne({gameId:game._id,round: game.round});
     
-    var setNewAnswer = {};
-    setNewAnswer["answers." + params.playerId] =  params.lie;
-    GameRounds.update({gameId: round.gameId, round: round.round}, { $set: setNewAnswer });
-    //todo add lie
+    var setnewOption = {};
+    setnewOption["options." + params.playerId] =  params.lie;
+    GameRounds.update({gameId: round.gameId, round: round.round}, { $set: setnewOption });
   },
   startGuessing: function(params){
     check(params.gameId, String);
@@ -107,7 +106,7 @@ Meteor.methods({
     
     var whenTimeIsRunOut = new Date(round.whenRoundStarted.getTime() + Meteor.constants.GUESS_TIME_SECONDS *1000);
     var numberOfPlayers = _.size(game.players);
-    var numberOfLies = _.size(round.answers) - 1;
+    var numberOfLies = _.size(round.options) - 1;
     if(new Date() < whenTimeIsRunOut && numberOfLies < numberOfPlayers ){
       throw new Meteor.Error("not-ready", "Can not start game until all players have lied or time has elapsed.");
     }
@@ -118,12 +117,14 @@ Meteor.methods({
   addGuess: function(params){
     check(params.gameId, String);
     check(params.playerId, String);
-    check(params.answerId, String);
+    check(params.optionId, String);
     
     var game = Games.findOne({_id:params.gameId});
     var round = GameRounds.findOne({gameId:game._id,round: game.round});
     
-    //todo add a guess
+    var setNewAnswer = {};
+    setNewAnswer["answers." + params.playerId] =  params.optionId;
+    GameRounds.update({gameId: round.gameId, round: round.round}, { $set: setNewAnswer });
   },
 });
 

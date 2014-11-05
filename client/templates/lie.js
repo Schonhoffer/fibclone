@@ -14,7 +14,7 @@ Template.lie.events({
           alert('That lie is the truth');
         }
         else{
-          alert('couldn\'t submit lie');
+          alert(error.message);
         }
         
       } else {
@@ -31,7 +31,7 @@ Template.lie.events({
     
     Meteor.call('startGuessing', params, function (error, result) {
       if (error) {
-          alert('couldn\'t start guessing');
+          alert(error.message);
       }
     });
   }

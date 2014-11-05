@@ -13,16 +13,18 @@ Router.route('/game/:_id', {
             Meteor.subscribe('gameRounds', this.params._id)]
   },
   data: function () { 
-    var game = Games.findOne({_id: this.params._id});
-    
-    var round = null;
+    var gameId = this.params._id;
+    var round = 0;
+    check(gameId, String);
+
+    var game = Games.findOne({_id: gameId});
     if(game){
-      round = GameRounds.findOne({gameId: this.params._id, round: game.round})
+      round = game.round;
     }
     
     return {
       game: game,
-      round: round
+      round: GameRounds.findOne({gameId: gameId, round: {$lte: round}})
     }
   }
 });

@@ -10,7 +10,7 @@ Template.create.events({
     
     Meteor.call('createRoom', params, function (error, gameId) {
       if (error) {
-        alert('couldn\'t create game');
+        alert(error.message);
       } else {
         Router.go('game', {_id: gameId});
       }

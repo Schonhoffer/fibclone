@@ -14,7 +14,7 @@ Template.join.events({
           alert('couldn\'t find game');
         }
         else{
-          alert('couldn\'t join game');
+          alert(error.message);
         }
         
       } else {

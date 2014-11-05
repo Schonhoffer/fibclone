@@ -1,7 +1,8 @@
 Template.guess.helpers({
   answers: function() {
+    var gameId = this.game._id;
     return _.map(this.round.answers, function(value, key){
-      return {answerId: key, text: value, gameId: this.game._id};
+      return {optionId: key, text: value, gameId: gameId};
     });
   }
 });
@@ -12,12 +13,12 @@ Template.guess.events({
       var params = {
         playerId: Session.get('playerId'),
         gameId: this.gameId,
-        answerId: this.answerId
+        optionId: this.optionId
       };
       
-      Meteor.call('addGuess', params, function (error, roomId) {
+      Meteor.call('addGuess', params, function (error, result) {
         if (error) {
-          alert('couldn\'t add guess');
+          alert(error.message);
         } else {
         }
       });

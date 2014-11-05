@@ -1,7 +1,7 @@
 <template name="lobby">
   <h1>{{ roomCode }}</h1>
   
-  <ul>
+  <ul id="lobbyPlayersList">
   {{#each playersArray}} 
     <li>{{nickname}}</li>
   {{/each}} 

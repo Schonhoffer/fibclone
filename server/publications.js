@@ -7,10 +7,12 @@ Meteor.publish('games', function(playerId) {
 
 Meteor.publish('gameRounds', function(gameId) {
   check(gameId, String);
-  var gameIdToSearch = '';
+  var round = 0;
   var game = Games.findOne({_id:gameId});
-  if(game != null){
-    gameIdToSearch = game._id;
+  
+  if(game){
+    round = game.round;
   }
-  return GameRounds.find({gameId: gameIdToSearch, round: { $lte: game.round}});
+  
+  return GameRounds.find({gameId: gameId, round: round});
 });
