@@ -5,14 +5,9 @@ Meteor.publish('games', function(playerId) {
   return Games.find(query);
 });
 
-Meteor.publish('gameRounds', function(gameId) {
+Meteor.publish('gameRounds', function(playerId, gameId) {
   check(gameId, String);
-  var round = 0;
-  var game = Games.findOne({_id:gameId});
+  check(playerId, String);
   
-  if(game){
-    round = game.round;
-  }
-  
-  return GameRounds.find({gameId: gameId, round: round});
+  return GameRounds.find({gameId: gameId, players: playerId});
 });

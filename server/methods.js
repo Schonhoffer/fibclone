@@ -27,7 +27,8 @@ Meteor.methods({
       options: {"truth": "42"},
       answers: {},
       truthValue: 1000,
-      lieValue: 500
+      lieValue: 500,
+      players: [params.hostId]
     })
     
     return gameId;
@@ -59,6 +60,7 @@ Meteor.methods({
       nickname: params.nickname
     };
     Games.update({_id: game._id}, { $set: setNewPlayer });
+    GameRounds.update({gameId: game._id}, {$addToSet: {players: params.playerId}}, {multi:true});
     
     return game._id;
   },

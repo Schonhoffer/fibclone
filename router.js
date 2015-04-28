@@ -10,7 +10,7 @@ Router.route('/game/:_id', {
   template: 'game',
   waitOn: function() {
     return [Meteor.subscribe('games', Session.get('playerId')),
-            Meteor.subscribe('gameRounds', this.params._id)]
+            Meteor.subscribe('gameRounds', Session.get('playerId'), this.params._id)]
   },
   data: function () { 
     var gameId = this.params._id;
