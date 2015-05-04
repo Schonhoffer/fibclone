@@ -1,14 +1,21 @@
 <template name="create">
-  <h1>create new room</h1>
+<!-- <div class="panel panel-default">
+  <div class="panel-body"> -->
+  <h1>Create new room</h1>
     <form class="form-horizontal">
-    <div class="form-group">
-      <label for="nickname">Nickname?</label>
-    <input class="form-control input-lg" type="text" name="nickname">
+    <div class="form-group form-group-lg">
+      <label class="col-sm-2 control-label" for="nickname">Nickname?</label>
+      <div class="col-sm-10">
+       <input class="form-control input-lg" type="text" name="nickname">
+      </div>
     </div>
-      <div class="form-group">
-      <label for="allowGeo">Allow Geo search?</label>
-    <input class="form-control input-lg" type="checkbox" name="allowGeo">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="allowGeo">
+        Allow Geo search
+      </label>
     </div>
-    <button type="submit">Create game</button>
+    <button type="submit" class="btn btn-primary btn-lg">Create game</button>
   </form>
+  <!-- </div></div> -->
 </template>

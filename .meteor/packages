@@ -5,7 +5,10 @@
 
 meteor-platform
 insecure
-html5cat:bootstrap-material-design
 less
 iron:router
 u2622:persistent-session
+twbs:bootstrap
+meteorhacks:kadira
+meteortypescript:compiler
+meteortypescript:typescript-libs
