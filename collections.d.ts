@@ -37,6 +37,14 @@ interface AddGuessCommand {
     optionId: string;
 }
 
+interface FibcloneService {
+  createRoom (command : CreateRoomCommand) : string 
+  joinRoom (command : JoinRoomCommand) : string 
+  setRoundNumber (command : SetRoundNumberCommand) : void 
+  addLie (command : AddLieCommand)
+  addGuess (command : AddGuessCommand)
+}
+
 interface GamePlayer {
     playerId: string;
     nickname: string;

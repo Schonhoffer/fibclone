@@ -2,9 +2,12 @@
 /// <reference path="../../.meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions/ironrouter.d.ts" />
 
 /// <reference path="../../collections.d.ts"/>
+/// <reference path="../service.ts"/>
+var createTemplate = <Template>Template['create'];
 
-Template['create'].events({
-  'submit': function(event, template) {
+createTemplate.events({
+  'submit': function(event : Meteor.Event, template : Blaze.TemplateInstance) 
+  {
     event.preventDefault();
     
     var command : CreateRoomCommand = {
@@ -13,7 +16,7 @@ Template['create'].events({
       hostId: Session.get('playerId')
     };
     
-    Meteor.call('createRoom', command, function (error, gameId) {
+    new FibcloneServiceClient().createRoom(command, function (error, gameId) {
       if (error) {
         alert(error.message);
       } else {

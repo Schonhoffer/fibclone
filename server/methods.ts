@@ -2,7 +2,7 @@
 /// <reference path="../.meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions/underscore.d.ts" />
 /// <reference path="../collections.d.ts"/>
 
-class FibCloneServiceImpl {
+class FibCloneServiceImpl implements FibcloneService {
   createRoom (command : CreateRoomCommand) : string {
     check(command.allowGeo, Boolean);
     check(command.hostId, String);
