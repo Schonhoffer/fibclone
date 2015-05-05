@@ -8,7 +8,7 @@ Template['lie'].helpers({
     var round = this.round || {gameId: '', roundNumber: 0};
     var query = {gameId: round.gameId, round: round.roundNumber};
     query['options.'+Session.get('playerId')] = {$exists: true};
-    return !!GameRounds.findOne(query);
+    return false;//!!GameRounds.findOne(query);
   }
 });
 

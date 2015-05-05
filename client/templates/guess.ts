@@ -13,7 +13,7 @@ Template['guess'].helpers({
   hasSubmittedGuess: function(){
     var query = {gameId: this.round.gameId, roundNumber: this.round.roundNumber};
     query['answers.'+Session.get('playerId')] = {$exists: true};
-    return !!GameRounds.findOne(query);
+    return false;//!!GameRounds.findOne(query);
   }
 });
 

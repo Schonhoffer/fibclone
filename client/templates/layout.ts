@@ -14,7 +14,7 @@ Meteor.startup(function () {
 Template['layout'].helpers({
   connected: function() {
     if (Session.get('allowConnectionErrorMessage')) {
-      return Meteor.status().connected;
+      return Meteor.status()['connected'];
     } else {
       return true;
     }
