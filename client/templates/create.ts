@@ -2,7 +2,8 @@
 /// <reference path="../../.meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions/ironrouter.d.ts" />
 
 /// <reference path="../../collections.d.ts"/>
-/// <reference path="../service.ts"/>
+/// <reference path="../methodClient.ts"/>
+
 var createTemplate = <Template>Template['create'];
 
 createTemplate.events({
@@ -16,7 +17,7 @@ createTemplate.events({
       hostId: Session.get('playerId')
     };
     
-    new FibcloneServiceClient().createRoom(command, function (error, gameId) {
+    Fibclone.MethodClient.createRoom(command, function (error, gameId) {
       if (error) {
         alert(error.message);
       } else {

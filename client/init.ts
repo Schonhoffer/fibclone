@@ -1,4 +1,5 @@
 /// <reference path="../.meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions/meteor.d.ts" />
+/// <reference path="../collections.d.ts"/>
 
 function generateUUID() : string{
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
@@ -11,7 +12,7 @@ if (Meteor.isClient) {
     
     if(!uuid){
       uuid = generateUUID();
-      Session['setPersistent']('playerId', uuid);
+      Session.setPersistent('playerId', uuid);
     }
     
     console.log('playerId is '+uuid);

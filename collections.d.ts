@@ -66,6 +66,10 @@ interface Game {
 }
 declare var Games : Mongo.Collection<Game>;
 
+declare module Session {
+	function setPersistent(key: string, value: EJSONable | any /** Undefined **/): void;
+}
+
 // interface ListDAO {
     // _id?: string;
     // name: string;
