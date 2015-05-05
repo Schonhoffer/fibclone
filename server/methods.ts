@@ -2,8 +2,8 @@
 /// <reference path="../.meteor/local/build/programs/server/assets/packages/meteortypescript_typescript-libs/definitions/underscore.d.ts" />
 /// <reference path="../collections.d.ts"/>
 
-Meteor.methods({
-  createRoom: function (command : CreateRoomCommand) : string {
+class FibCloneServiceImpl {
+  createRoom (command : CreateRoomCommand) : string {
     check(command.allowGeo, Boolean);
     check(command.hostId, String);
     check(command.nickname, String);
@@ -41,8 +41,11 @@ Meteor.methods({
     // })
     
     return gameId;
-  },
-  
+  }
+}
+Meteor.methods(new FibCloneServiceImpl());
+
+Meteor.methods({
   joinRoom: function (command : JoinRoomCommand) : string {
     check(command.roomCode, String);
     check(command.playerId, String);
@@ -118,19 +121,19 @@ Meteor.methods({
     var game = getGameById(command.gameId);
     // var round = GameRounds.findOne({gameId:game._id,round: game.roundNumber});
     
-    if(round.whenGuessingStarted){
-      throw new Meteor.Error("already-started", "Guessing has already started.");
-    }
-    
-    var whenTimeIsRunOut = new Date(round.whenRoundStarted.getTime() + Meteor.settings['GUESS_TIME_SECONDS'] *1000);
-    var numberOfPlayers = _.size(game.players);
-    var numberOfLies = _.size(round.options) - 1;
-    if(new Date() < whenTimeIsRunOut && numberOfLies < numberOfPlayers ){
-      throw new Meteor.Error("not-ready", "Can not start game until all players have lied or time has elapsed.");
-    }
-    
-    //todo: should be using $min for date started
-    // GameRounds.update({gameId: round.gameId, round: round.roundNumber}, { $set: {whenGuessingStarted: new Date()}}); 
+//    if(round.whenGuessingStarted){
+//      throw new Meteor.Error("already-started", "Guessing has already started.");
+//    }
+//    
+//    var whenTimeIsRunOut = new Date(round.whenRoundStarted.getTime() + Meteor.settings['GUESS_TIME_SECONDS'] *1000);
+//    var numberOfPlayers = _.size(game.players);
+//    var numberOfLies = _.size(round.options) - 1;
+//    if(new Date() < whenTimeIsRunOut && numberOfLies < numberOfPlayers ){
+//      throw new Meteor.Error("not-ready", "Can not start game until all players have lied or time has elapsed.");
+//    }
+//    
+//    //todo: should be using $min for date started
+//    // GameRounds.update({gameId: round.gameId, round: round.roundNumber}, { $set: {whenGuessingStarted: new Date()}}); 
   },
   
   addGuess: function(command : AddGuessCommand){
@@ -144,7 +147,7 @@ Meteor.methods({
     var setNewAnswer = {};
     setNewAnswer["answers." + command.playerId] =  command.optionId;
     // GameRounds.update({gameId: round.gameId, round: round.roundNumber}, { $set: setNewAnswer });
-  },
+  }
 });
 
 function getGameById(gameId : string) : Game{

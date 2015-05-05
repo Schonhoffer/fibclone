@@ -11,7 +11,7 @@ if (Meteor.isClient) {
     
     if(!uuid){
       uuid = generateUUID();
-      Session.setPersistent('playerId', uuid);
+      Session['setPersistent']('playerId', uuid);
     }
     
     console.log('playerId is '+uuid);
