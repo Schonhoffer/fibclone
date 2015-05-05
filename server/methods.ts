@@ -42,11 +42,8 @@ class FibCloneServiceImpl {
     
     return gameId;
   }
-}
-Meteor.methods(new FibCloneServiceImpl());
-
-Meteor.methods({
-  joinRoom: function (command : JoinRoomCommand) : string {
+  
+  joinRoom (command : JoinRoomCommand) : string {
     check(command.roomCode, String);
     check(command.playerId, String);
     check(command.nickname, String);
@@ -86,9 +83,9 @@ Meteor.methods({
     addPlayerToGame(command.playerId, command.nickname);
     
     return game._id;
-  },
+  }
   
-  setRoundNumber: function(command : SetRoundNumberCommand) : void {
+  setRoundNumber (command : SetRoundNumberCommand) : void {
     check(command.roundNumber, Match.Integer);
     check(command.gameId, String);
     
@@ -99,9 +96,9 @@ Meteor.methods({
       //todo: should be using $min
       // GameRounds.update({gameId: game._id, round: params.round}, { $set: {whenRoundStarted: new Date()}}); 
     }
-  },
+  }
   
-  addLie: function(command : AddLieCommand){
+  addLie (command : AddLieCommand){
     check(command.gameId, String);
     check(command.playerId, String);
     check(command.lie, String);
@@ -113,9 +110,9 @@ Meteor.methods({
     setnewOption["options." + command.playerId] =  command.lie;
     // GameRounds.update({gameId: round.gameId, round: round.roundNumber}, { $set: setnewOption });
     console.log('added lie');
-  },
+  }
   
-  startGuessing: function(command : StartGuessingCommand){
+  startGuessing (command : StartGuessingCommand){
     check(command.gameId, String);
     
     var game = getGameById(command.gameId);
@@ -134,9 +131,9 @@ Meteor.methods({
 //    
 //    //todo: should be using $min for date started
 //    // GameRounds.update({gameId: round.gameId, round: round.roundNumber}, { $set: {whenGuessingStarted: new Date()}}); 
-  },
+  }
   
-  addGuess: function(command : AddGuessCommand){
+  addGuess (command : AddGuessCommand){
     check(command.gameId, String);
     check(command.playerId, String);
     check(command.optionId, String);
@@ -148,7 +145,9 @@ Meteor.methods({
     setNewAnswer["answers." + command.playerId] =  command.optionId;
     // GameRounds.update({gameId: round.gameId, round: round.roundNumber}, { $set: setNewAnswer });
   }
-});
+}
+
+Meteor.methods(FibCloneServiceImpl.prototype);
 
 function getGameById(gameId : string) : Game{
       console.log('Looking for room id: ' + gameId);
